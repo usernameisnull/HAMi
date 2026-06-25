@@ -1,0 +1,264 @@
+hami:
+  dcuResourceCores: hygon.com/dcucores
+  dcuResourceMem: hygon.com/dcumem
+  dcuResourceName: hygon.com/dcunum
+  devicePlugin:
+    createRuntimeClass: false
+    deviceCoreScaling: 2
+    deviceMemoryScaling: 2
+    deviceSplitCount: 5
+    disablecorelimit: "false"
+    enabled: true
+    extraArgs:
+      - -v=4
+    hygonImageRepository: 4pdosc/vdcu-device-plugin
+    hygonImageTag: v1.0
+    image:
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+      registry: docker.m.daocloud.io
+      repository: projecthami/hami
+      tag: ""
+    libPath: /usr/local/vgpu
+    migStrategy: none
+    monitor:
+      ctrPath: /usr/local/vgpu/containers
+      image:
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+        registry: docker.m.daocloud.io
+        repository: projecthami/hami
+        tag: ""
+      resources:
+        limits:
+          cpu: 500m
+          memory: 720Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      resyncInterval: 5m
+    nvidianodeSelector:
+      nvidia.com/gpu.deploy.container-toolkit: "true"
+      nvidia.com/vgpu.deploy.device-plugin: "true"
+    passDeviceSpecsEnabled: false
+    pluginPath: /var/lib/kubelet/device-plugins
+    podAnnotations: {}
+    resources:
+      limits:
+        cpu: 500m
+        memory: 720Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    runtimeClassName: ""
+    service:
+      annotations: {}
+      httpPort: 31992
+      labels: {}
+      type: NodePort
+    tolerations: []
+    updateStrategy:
+      rollingUpdate:
+        maxUnavailable: 1
+      type: RollingUpdate
+    vgpuMonitor:
+      resources:
+        limits:
+          cpu: 500m
+          memory: 720Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+  devices:
+    amd:
+      customresources:
+        - amd.com/gpu
+        - amd.com/gpu-memory
+    ascend:
+      customresources:
+        - huawei.com/Ascend910A
+        - huawei.com/Ascend910A-memory
+        - huawei.com/Ascend910B2
+        - huawei.com/Ascend910B2-memory
+        - huawei.com/Ascend910B3
+        - huawei.com/Ascend910B3-memory
+        - huawei.com/Ascend910B4
+        - huawei.com/Ascend910B4-memory
+        - huawei.com/Ascend910B4-1
+        - huawei.com/Ascend910B4-1-memory
+        - huawei.com/Ascend310P
+        - huawei.com/Ascend310P-memory
+      enabled: false
+      extraArgs: []
+      image: ""
+      imagePullPolicy: IfNotPresent
+      nodeSelector:
+        ascend: "on"
+      tolerations: []
+    awsneuron:
+      customresources:
+        - aws.amazon.com/neuron
+        - aws.amazon.com/neuroncore
+    enflame:
+      customresources:
+        - enflame.com/vgcu
+        - enflame.com/vgcu-percentage
+        - enflame.com/gcu
+      enabled: true
+    iluvatar:
+      customresources:
+        - iluvatar.ai/BI-V100-vgpu
+        - iluvatar.ai/BI-V100.vCore
+        - iluvatar.ai/BI-V100.vMem
+        - iluvatar.ai/BI-V150-vgpu
+        - iluvatar.ai/BI-V150.vCore
+        - iluvatar.ai/BI-V150.vMem
+        - iluvatar.ai/MR-V100-vgpu
+        - iluvatar.ai/MR-V100.vCore
+        - iluvatar.ai/MR-V100.vMem
+        - iluvatar.ai/MR-V50-vgpu
+        - iluvatar.ai/MR-V50.vCore
+        - iluvatar.ai/MR-V50.vMem
+      enabled: false
+    kunlun:
+      customresources:
+        - kunlunxin.com/xpu
+        - kunlunxin.com/vxpu
+        - kunlunxin.com/vxpu-memory
+      enabled: true
+    mthreads:
+      customresources:
+        - mthreads.com/vgpu
+      enabled: true
+    nvidia:
+      gpuCorePolicy: default
+      libCudaLogLevel: 1
+  enflameResourceNameVGCU: enflame.com/vgcu
+  enflameResourceNameVGCUPercentage: enflame.com/vgcu-percentage
+  fullnameOverride: ""
+  global:
+    annotations: {}
+    gpuHookPath: /usr/local
+    imagePullSecrets: []
+    imageRegistry: ""
+    imageTag: v2.7.1
+    labels: {}
+    managedNodeSelector:
+      usage: gpu
+    managedNodeSelectorEnable: false
+  kunlunResourceName: kunlunxin.com/xpu
+  kunlunResourceVCountName: kunlunxin.com/vxpu
+  kunlunResourceVMemoryName: kunlunxin.com/vxpu-memory
+  metaxResourceCore: metax-tech.com/vcore
+  metaxResourceMem: metax-tech.com/vmemory
+  metaxResourceName: metax-tech.com/sgpu
+  metaxsGPUTopologyAware: "false"
+  mluResourceCores: cambricon.com/mlu.smlu.vcore
+  mluResourceMem: cambricon.com/mlu.smlu.vmemory
+  mluResourceName: cambricon.com/vmlu
+  nameOverride: ""
+  namespaceOverride: ""
+  podSecurityPolicy:
+    enabled: false
+  resourceCores: nvidia.com/gpucores
+  resourceMem: nvidia.com/gpumem
+  resourceMemPercentage: nvidia.com/gpumem-percentage
+  resourceName: nvidia.com/vgpu
+  resourcePriority: nvidia.com/priority
+  scheduler:
+    admissionWebhook:
+      customURL:
+        enabled: false
+        host: 127.0.0.1
+        path: /webhook
+        port: 31998
+      enabled: true
+      failurePolicy: Ignore
+      reinvocationPolicy: Never
+      whitelistNamespaces: null
+    certManager:
+      enabled: false
+    defaultSchedulerPolicy:
+      gpuSchedulerPolicy: spread
+      nodeSchedulerPolicy: binpack
+    extender:
+      extraArgs:
+        - --debug
+        - -v=4
+      image:
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+        registry: docker.m.daocloud.io
+        repository: projecthami/hami
+        tag: ""
+      resources:
+        limits:
+          cpu: 500m
+          memory: 720Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+    forceOverwriteDefaultScheduler: true
+    kubeScheduler:
+      enabled: true
+      extraArgs:
+        - --policy-config-file=/config/config.json
+        - -v=4
+      extraNewArgs:
+        - --config=/config/config.yaml
+        - -v=4
+      image:
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+        registry: k8s-gcr.m.daocloud.io
+        repository: kubernetes/kube-scheduler
+        tag: v1.28.0
+      resources:
+        limits:
+          cpu: 500m
+          memory: 720Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+    leaderElect: true
+    livenessProbe: false
+    metricsBindAddress: :9395
+    nodeLockExpire: 5m
+    nodeName: ""
+    nodeSelector:
+      nvidia.com/gpu.deploy.container-toolkit: "true"
+    overwriteEnv: "false"
+    patch:
+      enabled: true
+      image:
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+        registry: docker.m.daocloud.io
+        repository: jettech/kube-webhook-certgen
+        tag: v1.5.2
+      imageNew:
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+        registry: docker.m.daocloud.io
+        repository: liangjw/kube-webhook-certgen
+        tag: v1.1.1
+      nodeSelector: {}
+      podAnnotations: {}
+      priorityClassName: ""
+      runAsUser: 2000
+      tolerations: []
+    podAnnotations: {}
+    replicas: 1
+    service:
+      annotations: {}
+      httpPort: 443
+      httpTargetPort: 443
+      labels: {}
+      monitorPort: 31993
+      monitorTargetPort: 9395
+      schedulerPort: 31998
+      type: NodePort
+    serviceMonitor:
+      enable: true
+    tolerations: []
+  schedulerName: hami-scheduler
