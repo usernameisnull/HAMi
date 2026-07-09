@@ -1,0 +1,89 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: hami-scheduler
+  namespace: hami
+  uid: 5134db7d-33fe-4459-bb89-70ae9762f9a8
+  resourceVersion: '204437772'
+  creationTimestamp: 2026-06-21T07:38:55Z
+  labels:
+    app.kubernetes.io/component: hami-scheduler
+    app.kubernetes.io/instance: hami
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: hami
+    app.kubernetes.io/version: 2.9.0
+    helm.sh/chart: hami-2.9.0
+  annotations:
+    meta.helm.sh/release-name: hami
+    meta.helm.sh/release-namespace: hami
+data:
+  config.yaml: |
+    apiVersion: kubescheduler.config.k8s.io/v1
+    kind: KubeSchedulerConfiguration
+    leaderElection:
+      leaderElect: true
+      resourceName: "hami-scheduler"
+      resourceNamespace: "hami"
+    profiles:
+      - schedulerName: hami-scheduler
+    extenders:
+      - urlPrefix: "https://127.0.0.1:443"
+        enableHTTPS: true
+        tlsConfig:
+          insecure: true
+        filterVerb: filter
+        bindVerb: bind
+        nodeCacheCapable: true
+        weight: 1
+        httpTimeout: 30s
+        managedResources:
+          - ignoredByScheduler: true
+            name: nvidia.com/gpu
+          - ignoredByScheduler: true
+            name: nvidia.com/gpumem
+          - ignoredByScheduler: true
+            name: nvidia.com/gpucores
+          - ignoredByScheduler: true
+            name: nvidia.com/gpumem-percentage
+          - ignoredByScheduler: true
+            name: nvidia.com/priority
+          - ignoredByScheduler: true
+            name: cambricon.com/vmlu
+          - ignoredByScheduler: true
+            name: hygon.com/dcunum
+          - ignoredByScheduler: true
+            name: hygon.com/dcumem
+          - ignoredByScheduler: true
+            name: hygon.com/dcucores
+          - ignoredByScheduler: true
+            name: metax-tech.com/gpu
+          - ignoredByScheduler: true
+            name: metax-tech.com/sgpu
+          - ignoredByScheduler: true
+            name: metax-tech.com/vcore
+          - ignoredByScheduler: true
+            name: metax-tech.com/vmemory
+          - ignoredByScheduler: true
+            name: mthreads.com/vgpu
+          - ignoredByScheduler: true
+            name: enflame.com/vgcu
+          - ignoredByScheduler: true
+            name: enflame.com/vgcu-percentage
+          - ignoredByScheduler: true
+            name: enflame.com/gcu
+          - ignoredByScheduler: true
+            name: kunlunxin.com/xpu
+          - ignoredByScheduler: true
+            name: kunlunxin.com/vxpu
+          - ignoredByScheduler: true
+            name: kunlunxin.com/vxpu-memory
+          - ignoredByScheduler: true
+            name: aws.amazon.com/neuron
+          - ignoredByScheduler: true
+            name: aws.amazon.com/neuroncore
+          - ignoredByScheduler: true
+            name: vastaitech.com/va
+          - ignoredByScheduler: true
+            name: amd.com/gpu
+          - ignoredByScheduler: true
+            name: amd.com/gpu-memory

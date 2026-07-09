@@ -50,7 +50,7 @@ proto:
 
 build: $(CMDS) $(DEVICES)
 
-$(CMDS):
+$(CMDS): # $@展开成为这个target: $(CMDS), 在version.mk里被定义
 	$(GO) build -ldflags '$(GO_BUILD_LDFLAGS)' -o ${OUTPUT_DIR}/$@ ./cmd/$@
 
 $(DEVICES):
