@@ -6,7 +6,7 @@
 gpu-operator就是[`NVIDIA GPU Operator`](https://github.com/nvidia/gpu-operator) 
 
 ## DCE5部署后
-- device-plugin: 是ds部署的, 里面有2个container对应的代码: `cmd/device-plugin`和`cmd/vGPUmonitor`
+- device-plugin: 是ds部署的, 里面有2个目录对应的代码: `cmd/device-plugin`和`cmd/vGPUmonitor`
 - scheduler: 是deployment部署的, 使用了k8s官方的kube-scheduler, 版本与部署的k8s集群的版本一致
 ```bash
 ➜ kgp -A |grep -i hami
